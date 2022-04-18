@@ -1,0 +1,68 @@
+input[type="text"]:focus {
+	outline:0px !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+}
+
+.input-form *{
+    display: inline;
+}
+
+.msg {
+    width: 100%;
+    word-wrap: break-word;
+}
+
+form .shake {
+    animation: shake 0.3s ease-in-out;
+}
+
+form .error-msg {
+	color: crimson;
+	font-weight: 0;
+	visibility: hidden;
+}
+
+form .error-img {
+	color: crimson;
+	font-weight: 0;
+	visibility: visible;
+}
+
+form .error-field {
+	border-color : crimson;
+}
+
+form .error-field:focus {
+	border-color: crimson;
+}
+
+.chat-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.chat-div, .img-div {
+	width: 40%;
+}
+
+.img-msg {
+	width: 100%;
+}
+
+.msgEffect {
+	
+}
+
+@keyframes shake {
+	0%, 100% {
+		margin-left: 0;
+	}
+	20%, 80% {
+		margin-left: -12px;
+	}
+	40%, 60% {
+		margin-left: 12px;
+	}
+}
