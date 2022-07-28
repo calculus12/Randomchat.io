@@ -17,23 +17,26 @@ var numUser = 0;
 
 io.on('connection', function(socket) {
     // 클라이언트와 연결되면
-    var clinetIP = socket.request.connection.remoteAddress;
+    var clientIP = socket.request.connection.remoteAddress;
     socket.on('login', function(data) {
         numUser++;
         console.log(data.name + '님이 입장하셨습니다.\n' +
-        'Client IP'+ ' : ' + clinetIP);
+        'Client IP'+ ' : ' + clientIP);
         socket.name = data.name;
         io.emit('login', {name: data.name, numUser: numUser});
     });
 
     // 클라이언트로부터 메세지를 받으면
     socket.on('chat', function(data) {
+        if (data.msg.length > 100) {
+        data.msg = data.msg.slice(0,100);
+        }
         console.log('Message from %s : %s', socket.name, data.msg);
-
+        
         var msg = {
             from : {
                 name : socket.name,
-                address : clinetIP
+                address : clientIP
             },
             msg : data.msg
         };
@@ -48,7 +51,7 @@ io.on('connection', function(socket) {
         var msg = {
             from : {
                 name : socket.name,
-                address : clinetIP
+                address : clientIP
             },
             img : data
         };
@@ -56,7 +59,7 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('imgChat', msg);
     })
 
-    socket.on('forceDisconnet', function() {
+    socket.on('forceDisconnect', function() {
         numUser--;
         socket.disconnect();
     });
@@ -64,7 +67,7 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         numUser--;
         console.log('user disconnect: ' + socket.name);
-        socket.broadcast.emit('disconnetUser', {name: socket.name, numUser: numUser});
+        socket.broadcast.emit('disconnectUser', {name: socket.name, numUser: numUser});
     });
 })
 
